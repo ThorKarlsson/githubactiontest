@@ -8,8 +8,6 @@ jobs:
         id: slack
         uses: slackapi/slack-github-action@v1.15.0
         with:
-          payload: ${{format(env.SLACK_MSG, 'test', env.GITHUB_REF, 'test' )}}
+          payload: ${{format('{"name":"{0}", "version":"{1}","version_url":"https://github.com/githubactiontest/releases/tag/{1}","status":":rocket: Successful Deployment :rocket:","server":"{2}"}', 'test', env.GITHUB_REF, 'test' )}}
         env:
           SLACK_WEBHOOK_URL: https://hooks.slack.com/workflows/redacted
-          SLACK_MSG: >
-            {'name':'{0}', 'version':'{1}','version_url':'https://github.com/githubactiontest/releases/tag/{1}','status':':rocket: Successful Deployment :rocket:','server':'{2}'}
