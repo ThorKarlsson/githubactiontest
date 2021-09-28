@@ -12,4 +12,4 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: https://hooks.slack.com/workflows/redacted
           SLACK_MSG: >
-            {"name":"{0}", "version":"{1}","version_url":"https://github.com/MyHR/api-auth/releases/tag/{1}","status":":rocket: Successful Deployment :rocket:","server":"{2}"}
+            {"name":"{0}", "version":"{1}","version_url":"https://github.com/githubactiontest/releases/tag/{1}","status":":rocket: Successful Deployment :rocket:","server":"{2}"}
