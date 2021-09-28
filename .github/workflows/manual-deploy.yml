@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test with echo
-        run: echo ${{format(env.SLACK_MSG, 'test', env.GITHUB_REF, 'test)}}
+        run: echo ${{format(env.SLACK_MSG, 'test', env.GITHUB_REF, 'test')}}
         env:
           SLACK_MSG: >
             {'name':'{0}', 'version':'{1}','version_url':'https://github.com/githubactiontest/releases/tag/{1}','status':':rocket: Successful Deployment :rocket:','server':'{2}'}
