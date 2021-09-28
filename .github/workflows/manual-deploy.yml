@@ -10,6 +10,6 @@ jobs:
         with:
           payload: ${{format(env.SLACK_MSG, "test", env.GITHUB_REF, "test" )}}
         env:
-          SLACK_WEBHOOK_URL: https://hooks.slack.com/workflows/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
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/workflows/redacted
           SLACK_MSG: >
             {"name":"{0}", "version":"{1}","version_url":"https://github.com/MyHR/api-auth/releases/tag/{1}","status":":rocket: Successful Deployment :rocket:","server":"{2}"}
