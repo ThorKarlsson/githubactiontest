@@ -13,10 +13,10 @@ jobs:
 #       - name: test with echo3
 #         run: echo ${{GITHUB_REF}}
       - name: test with echo4
-        run: echo ${{env.GITHUB_REF}}
-#         run: echo ${{format(env.SLACK_MSG, 'test', GITHUB_REF, 'test')}}
-#         env:
-#           SLACK_MSG: >
+#         run: echo ${{env.GITHUB_REF}}
+        run: echo ${{format(env.SLACK_MSG, 'test', $GITHUB_REF, 'test')}}
+        env:
+          SLACK_MSG: >
 #             {{'name':'{0}', 'version':'{1}','version_url':'https://github.com/githubactiontest/releases/tag/{1}','status':':rocket: Successful Deployment :rocket:','server':'{2}'}}
 #       - name: Notify Slack of successful deployment
 #         id: slack
