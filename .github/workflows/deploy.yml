@@ -6,6 +6,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: extract tag
+        id: tag
+        run: echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
       - name: test with echo
         run: echo $GITHUB_REF
       - name: test with echo2
@@ -14,8 +17,9 @@ jobs:
 #         run: echo ${{GITHUB_REF}}
       - name: test with echo4
 #         run: echo ${{env.GITHUB_REF}}
-        run: echo ${{format(env.SLACK_MSG, 'test', $GITHUB_REF, 'test')}}
+        run: echo ${{format(env.SLACK_MSG, 'test', env.tag, 'test')}}
         env:
+          tag: ${{ steps.tag.outputs.SOURCE_TAG }}
           SLACK_MSG: >
 #             {{'name':'{0}', 'version':'{1}','version_url':'https://github.com/githubactiontest/releases/tag/{1}','status':':rocket: Successful Deployment :rocket:','server':'{2}'}}
 #       - name: Notify Slack of successful deployment
