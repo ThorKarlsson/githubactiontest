@@ -10,8 +10,8 @@ jobs:
         run: echo GITHUB_REF
       - name: test with echo2
         run: echo env.GITHUB_REF
-      - name: test with echo3
-        run: echo ${{GITHUB_REF}}
+#       - name: test with echo3
+#         run: echo ${{GITHUB_REF}}
       - name: test with echo4
         run: echo ${{env.GITHUB_REF}}
 #         run: echo ${{format(env.SLACK_MSG, 'test', GITHUB_REF, 'test')}}
