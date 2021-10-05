@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test with echo
-        run: echo GITHUB_REF
+        run: echo $GITHUB_REF
       - name: test with echo2
         run: echo env.GITHUB_REF
 #       - name: test with echo3
