@@ -18,7 +18,7 @@ jobs:
         run: echo "TAG=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
       - name: diff master and tag
         id: diff
-        run: echo "DIFF=$(git log ${{env.TAG}}..master)" >> $GITHUB_ENV
+        run: echo "::set-output name=DIFF::$(git log ${{env.TAG}}..master)"
       - name: output
         id: output
-        run: echo ${{env.TAG}}
+        run: echo ${{steps.diff.outputs.DIFF}}
