@@ -4,7 +4,12 @@ on: workflow_dispatch
 #     types: 
 #       - requested
 #   schedule:
-#     - cron: '0 8 * * 1-5'
+# #     - cron: '0 8 * * 1-5'
+#   CHANGELOG=$(cat test.md)
+#   CHANGELOG="${CHANGELOG//'%'/'%25'}"
+#   CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+#   CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
+#   echo "::set-output name=changeLog::$CHANGELOG"
 jobs:
   get_tag:
     runs-on: ubuntu-latest
@@ -19,9 +24,11 @@ jobs:
       - name: diff master and tag
         id: diff
         run: | 
-          echo 'DIFF<<EOF' >> $GITHUB_ENV
-          echo '$(git shortlog ${{env.TAG}}..master)' >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
+          DIFF=$(git shortlog ${{env.TAG}}..master)
+          DIFF="${DIFF//'%'/'%25'}"
+          DIFF="${DIFF//$'\n'/'%0A'}"
+          DIFF="${DIFF//$'\r'/'%0D'}"
+          echo "::set-output name=diff::$DIFF"
       - name: output
         id: output
-        run: echo ${{env.DIFF}}
+        run: echo ${{steps.diff.outputs.diff}}
