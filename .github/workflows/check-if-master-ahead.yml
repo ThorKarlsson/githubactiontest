@@ -1,5 +1,8 @@
 name: Check-if-master-ahead
 on:
+  workflow_run:
+    types: 
+      - requested
   schedule:
     - cron: '0 8 * * 1-5'
 jobs:
