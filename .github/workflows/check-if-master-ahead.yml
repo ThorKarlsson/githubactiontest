@@ -1,0 +1,21 @@
+name: Check-if-master-ahead
+on:
+  schedule:
+    - cron: '0 8 * * 1-5'
+jobs:
+  get_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: get latest git tag
+        id: get_tag
+        run: echo "TAG=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+      - name: diff master and tag
+        id: diff
+        run: echo "DIFF=$(git log ${{env.TAG}}..master)" >> $GITHUB_ENV
+      - name: output
+        id: output
+        run: echo ${{env.TAG}}
