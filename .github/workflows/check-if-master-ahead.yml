@@ -16,6 +16,11 @@ jobs:
       - name: get latest git tag
         id: get_tag
         run: echo "TAG=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+      - name: get number of commits ahead
+        id: get_no_of_commits
+        run: | 
+          NO_OF_COMMITS=$(git log ${{env.TAG}}..master | grep "^commit" | wc -l)
+          echo "::set-output name=commits::$NO_OF_COMMITS"
       - name: diff master and tag
         id: diff
         run: | 
@@ -24,6 +29,16 @@ jobs:
           DIFF="${DIFF//$'\n'/'%0A'}"
           DIFF="${DIFF//$'\r'/'%0D'}"
           echo "::set-output name=diff::$DIFF"
-      - name: output
-        id: output
-        run: echo "${{steps.diff.outputs.diff}}"
+      - name: Notify Slack of changes
+        id: slack
+        run: | 
+          echo "${{env.NO_OF_COMMITS}}"
+          echo "${{format(env.SLACK_MSG, env.NO_OF_COMMITS, env.DIFF)}}"
+#         uses: slackapi/slack-github-action@v1.15.0
+#         with:
+#           payload: ${{format(env.SLACK_MSG, env.NO_OF_COMMITS, env.DIFF)}}
+        env:
+          DIFF: ${{steps.diff.outputs.diff}}
+          NO_OF_COMMITS: ${{steps.get_no_of_commits.outputs.commits}}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASE_CHECKER_WEBHOOK_URL }}
+          SLACK_MSG: '{{"repo":"member-forms", "no_of_commits":"{0}","diff":"{1}"}}'
