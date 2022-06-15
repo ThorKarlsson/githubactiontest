@@ -33,7 +33,7 @@ jobs:
         id: slack
         if: ${{env.NO_OF_COMMITS}} > 20
         run: | 
-          echo "${{env.NO_OF_COMMITS}}"
+          echo ${{env.NO_OF_COMMITS}}
           echo "${{format(env.SLACK_MSG, env.NO_OF_COMMITS, env.DIFF)}}"
 #         uses: slackapi/slack-github-action@v1.15.0
 #         with:
