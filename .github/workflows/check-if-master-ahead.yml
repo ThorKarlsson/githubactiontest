@@ -34,5 +34,5 @@ jobs:
         env:
           DIFF: ${{steps.diff.outputs.diff}}
           NO_OF_COMMITS: ${{steps.get_no_of_commits.outputs.commits}}
-          # SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASE_CHECKER_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASE_CHECKER_WEBHOOK_URL }}
           SLACK_MSG: '{{"repo":"member-forms", "no_of_commits":"{0}","diff":"{1}"}}'
