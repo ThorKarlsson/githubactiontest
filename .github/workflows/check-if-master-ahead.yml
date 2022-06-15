@@ -23,9 +23,6 @@ jobs:
         id: diff
         run: | 
           DIFF=$(git shortlog ${{env.TAG}}..master)
-          DIFF="${DIFF//'%'/'%25'}"
-          DIFF="${DIFF//$'\n'/'%0A'}"
-          DIFF="${DIFF//$'\r'/'%0D'}"
           echo "::set-output name=diff::$DIFF"
       - name: Notify Slack of changes
         id: slack
