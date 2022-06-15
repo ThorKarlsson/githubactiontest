@@ -1,10 +1,8 @@
 name: Check-if-master-ahead
-on: workflow_dispatch 
-# on:
-#     types: 
-#       - requested
-#   schedule:
-# #     - cron: '0 8 * * 1-5'
+on: 
+  workflow_dispatch:
+  schedule:
+     - cron: '0 8 * * 1-5'
 jobs:
   get_tag:
     runs-on: ubuntu-latest
@@ -34,7 +32,8 @@ jobs:
         if: env.NO_OF_COMMITS > 0
         run: | 
           echo ${{env.NO_OF_COMMITS}}
-          echo "${{format(env.SLACK_MSG, env.NO_OF_COMMITS, env.DIFF)}}"
+          MSG="${{format(env.SLACK_MSG, env.NO_OF_COMMITS, env.DIFF)}}"
+          echo "::set-output name=msg::$MSG
 #         uses: slackapi/slack-github-action@v1.15.0
 #         with:
 #           payload: ${{format(env.SLACK_MSG, env.NO_OF_COMMITS, env.DIFF)}}
@@ -43,3 +42,6 @@ jobs:
           NO_OF_COMMITS: ${{steps.get_no_of_commits.outputs.commits}}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASE_CHECKER_WEBHOOK_URL }}
           SLACK_MSG: '{{"repo":"member-forms", "no_of_commits":"{0}","diff":"{1}"}}'
+      - name: test
+        id: test
+        run: echo ${{steps.slack.outputs.MSG}}
