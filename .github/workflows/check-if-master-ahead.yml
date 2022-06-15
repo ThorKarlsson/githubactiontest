@@ -31,7 +31,7 @@ jobs:
           echo "::set-output name=diff::$DIFF"
       - name: Notify Slack of changes
         id: slack
-        if: env.NO_OF_COMMITS > 50
+        if: env.NO_OF_COMMITS > 0
         run: | 
           echo ${{env.NO_OF_COMMITS}}
           echo "${{format(env.SLACK_MSG, env.NO_OF_COMMITS, env.DIFF)}}"
